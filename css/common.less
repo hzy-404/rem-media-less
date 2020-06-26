@@ -1,0 +1,24 @@
+@charset "utf-8";
+//less-var
+@psdWidth:750;      // 最大分辨率
+@baseSize:15;       // 平均分成的份数
+@bs:50;             // 网页元素宽高计算html字体大小
+@baseColor:#fabc09;     // 网页主体色
+
+//less-array
+// 页面尺寸分辨率数组
+@deviceWidthList:320px,360px,375px,384px,400px,414px,424px,480px,540px,640px,720px,750px;
+
+//less-mixin
+//less函数:lenght(数组名):获取less数组的长度
+//extract(数组名,索引)less索引从1开始:获取less数组中对应索引的值
+.adapter(@index) when (@index <= length(@deviceWidthList)){  //when 不满足后面括号的条件就不在执行less方法中的内容 相当与while循环
+    @media (min-width:extract(@deviceWidthList,@index)){
+        html{
+            font-size: extract(@deviceWidthList,@index) / @baseSize;
+        }
+    }
+    //自调用
+    .adapter(@index+1);
+}
+.adapter(1);
